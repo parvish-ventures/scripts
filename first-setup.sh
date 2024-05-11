@@ -33,7 +33,11 @@ sudo apt-get install -y nodejs
 node -v
 npm -v
 
-npm install -g pnpm
+sudo npm install -g npm@latest
+node -v
+npm -v
+
+sudo npm install -g pnpm
 
 
 ####################################################
