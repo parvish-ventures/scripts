@@ -107,7 +107,7 @@ sudo mv vscode-server-linux-x64 /usr/local/lib/vscode-server
 # 4. Create a systemd service file (optional)
 # Variables
 service_file="/etc/systemd/system/code-server.service"
-vscode_server_path="/usr/local/lib/vscode-server"  # Adjust if installed elsewhere
+vscode_server_path="/usr/local/lib/vscode-server/bin/"  # Adjust if installed elsewhere
 username=$(whoami)  # Get current user's username
 
 # Create service file content
