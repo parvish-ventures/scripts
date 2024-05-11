@@ -44,7 +44,7 @@ echo "--------------------------- CONFIGURE GIT ---------------------------"
 echo "---------------------------------------------------------------------" 
 
 git config --global user.name "sachin.punyani"
-git config --global user.email "sachinn.punyani@gmail.com"
+git config --global user.email "sachin.punyani@gmail.com"
 git config --global credential.helper store
 
 ####################################################
