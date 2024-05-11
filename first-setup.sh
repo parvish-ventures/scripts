@@ -9,8 +9,6 @@ NODE=true
 MINICONDA=true
 GIT=true
 CONDA_ENV=true
-VSCODE=true
-EXTENSIONS=true
 
 if [ "$PRE_SETUP" = true ] ; then
     ####################################################
@@ -104,72 +102,4 @@ if [ "$CONDA_ENV" = true ] ; then
 
     conda create -n campus python --yes
     conda create -n capmkt python --yes
-fi
-
-if [ "$VSCODE" = true ] ; then
-    ####################################################
-    #### Setup vscode extensions
-    ####################################################
-
-    echo "-------------------------------------------------------------------------------" 
-    echo "--------------------------- SETUP VSCODE EXTENSIONS ---------------------------" 
-    echo "-------------------------------------------------------------------------------" 
-
-    # 1. Download (using wget)
-    wget https://update.code.visualstudio.com/latest/server-linux-x64/stable
-
-    # 2. Extract
-    tar -xzvf stable
-
-    # 3. Move to a suitable location (optional)
-    sudo mv vscode-server-linux-x64 /usr/local/lib/vscode-server
-
-    # 4. Create a systemd service file (optional)
-    # Variables
-    service_file="/etc/systemd/system/code-server.service"
-    vscode_server_path="/usr/local/lib/vscode-server/bin/"  # Adjust if installed elsewhere
-    username=$(whoami)  # Get current user's username
-
-    # Create service file content
-    service_content="[Unit]
-    Description=VS Code Server
-    After=network.target
-
-    [Service]
-    Type=simple
-    User=$username
-    ExecStart=$vscode_server_path/code-server --host 0.0.0.0
-    Restart=always
-
-    [Install]
-    WantedBy=multi-user.target"
-
-    # Write service file content
-    echo "$service_content" | sudo tee "$service_file" > /dev/null
-
-    # Reload systemd daemon
-    sudo systemctl daemon-reload
-
-    echo "VS Code Server service file created at $service_file"
-
-    # 5. Enable and start the service automatically
-    sudo systemctl enable code-server
-    sudo systemctl start code-server
-    echo "VS Code Server service enabled and started."
-fi
-
-if [ "$EXTENSIONS" = true ] ; then
-    #6. Install extensions
-    extensions_file="vscode_extensions.txt" 
-
-    # Check if VS Code Server is running
-    if ! pgrep -x "code-server" > /dev/null; then
-            echo "VS Code Server is not running. Please start it before running this script."
-            exit 1
-    fi
-
-    while IFS= read -r extension; do
-            echo "Installing extension: $extension"
-            code-server --install-extension "$extension"
-    done < "$extensions_file"
 fi
