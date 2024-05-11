@@ -68,7 +68,9 @@ rm -rf ~/miniconda3/miniconda.sh
 ~/miniconda3/bin/conda init bash
 ~/miniconda3/bin/conda init zsh
 
-source ~/.bashrc
+## Activate Miniconda in the current shell
+CONDA_BASE=$(~/miniconda3/bin/conda info --base)
+source "$CONDA_BASE/etc/profile.d/conda.sh"
 
 echo "Conda path : $(which conda)" 
 
